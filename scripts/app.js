@@ -13,7 +13,7 @@ $(document).ready(function(){
   //initial witch jump/fall with spacebar
   $(window).keydown(function(e){
     if (e.keyCode === 32) {
-      // e.preventDefault();
+      e.preventDefault();
       var intervalUp = setInterval(function(){
         witch.height+=2;
         $('#witch').css('bottom',witch.height);
@@ -23,9 +23,7 @@ $(document).ready(function(){
       }, 1);
       var intervalDown = setInterval(function(){
         witch.height-=1;
-        // if (witch.height<bat1.height){
-        //   console.log('hi');
-        // }
+        checkPos();
         $('#witch').css('bottom',witch.height);
         if (witch.height<=0){
           clearInterval(intervalDown);
@@ -60,11 +58,13 @@ $(document).ready(function(){
     }
   })
 
-})
-
-function checkPos(){
-  console.log(witch.height);
-  if(witch.height<50){
-    console.log('yay');
+  //function to check witch vs bat position
+  //????? why is this running on the way up too?
+  function checkPos(){
+    if (($('#witch').offset().left>bat1.left-60 && $('#witch').offset().left<bat1.left)
+    && ($('#witch').offset().top>bat1.height-3 && $('#witch').offset().top<bat1.height+2)){
+      jumpUp();
+    }
   }
-}
+
+})
