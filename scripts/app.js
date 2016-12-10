@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+  var intervalUp;
+  var intervalDown;
+  var intervalRight;
+  var currentHeight;
+  var start;
+
   //initializes witch/bat objects
   var witch = {
     height: 0,
@@ -10,26 +16,54 @@ $(document).ready(function(){
     left: $('#bat1').offset().left
   }
 
+  //functions to clear intervals
+  function clearUp(){
+    if (witch.height>=currentHeight+350){
+      clearInterval(intervalUp);
+    }
+  }
+  function clearDown(){
+    if (witch.height<=0){
+      clearInterval(intervalDown);
+      // alert('game over');
+    }
+  }
+  function clearSide(){
+    if (witch.left===start){
+      clearInterval(intervalRight);
+    }
+  }
+
+  //functions to move witch
+  function goUp(){
+    witch.height+=2;
+    $('#witch').css('bottom',witch.height);
+    clearUp();
+  }
+  function goDown(){
+    witch.height-=1;
+    checkPos();
+    $('#witch').css('bottom',witch.height);
+    clearDown();
+  }
+  function goRight(){
+    witch.left+=1;
+    $('#witch').css('left',witch.left);
+    clearSide()
+  }
+  function goLeft(){
+    witch.left-=1;
+    $('#witch').css('left',witch.left);
+    clearSide()
+  }
+
   //initial witch jump/fall with spacebar
   $(window).keydown(function(e){
     if (e.keyCode === 32) {
       e.preventDefault();
-      var intervalUp = setInterval(function(){
-        witch.height+=2;
-        $('#witch').css('bottom',witch.height);
-        if (witch.height>=350){
-          clearInterval(intervalUp);
-        }
-      }, 1);
-      var intervalDown = setInterval(function(){
-        witch.height-=1;
-        checkPos();
-        $('#witch').css('bottom',witch.height);
-        if (witch.height<=0){
-          clearInterval(intervalDown);
-          // alert('game over');
-        }
-      }, 10);
+      currentHeight = witch.height;
+      intervalUp = setInterval(goUp,1);
+      intervalDown = setInterval(goDown,10);
     }
   })
 
@@ -37,24 +71,12 @@ $(document).ready(function(){
   $(window).keydown(function(e){
     if (e.keyCode === 39){
       e.preventDefault();
-      var start = witch.left+9;
-      var intervalRight = setInterval(function(){
-        witch.left+=1;
-        $('#witch').css('left',witch.left);
-        if (witch.left===start){
-          clearInterval(intervalRight);
-        }
-      },9);
+      start = witch.left+9;
+      intervalRight = setInterval(goRight,9);
     } else if (e.keyCode === 37){
       e.preventDefault();
-      var start = witch.left-9;
-      var intervalRight = setInterval(function(){
-        witch.left-=1;
-        $('#witch').css('left',witch.left);
-        if (witch.left===start){
-          clearInterval(intervalRight);
-        }
-      },9);
+      start = witch.left-9;
+      intervalRight = setInterval(goLeft,9);
     }
   })
 
@@ -63,8 +85,31 @@ $(document).ready(function(){
   function checkPos(){
     if (($('#witch').offset().left>bat1.left-60 && $('#witch').offset().left<bat1.left)
     && ($('#witch').offset().top>bat1.height-3 && $('#witch').offset().top<bat1.height+2)){
-      jumpUp();
+      // batBoost();
     }
   }
+
+
+
+
+  // function batBoost(){
+  //   intervalUp = setInterval(function(){
+  //     var currentHeight=witch.height;
+  //     witch.height+=2;
+  //     $('#witch').css('bottom',witch.height);
+  //     if (witch.height>=currentHeight+350){
+  //       clearInterval(intervalUp);
+  //     }
+  //   }, 1);
+  //   var intervalDown = setInterval(function(){
+  //     witch.height-=1;
+  //     checkPos();
+  //     $('#witch').css('bottom',witch.height);
+  //     if (witch.height<=0){
+  //       clearInterval(intervalDown);
+  //       // alert('game over');
+  //     }
+  //   }, 10);
+  // }
 
 })
