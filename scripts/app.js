@@ -5,6 +5,8 @@ $(document).ready(function(){
   var intervalRight;
   var currentHeight;
   var start;
+  var rKeyDown;
+  var lKeyDown;
 
   //initializes witch/bat objects
   var witch = {
@@ -29,15 +31,26 @@ $(document).ready(function(){
   //horizontal movement
   $(window).keydown(function(e){
     if (e.keyCode === 39){
-      e.preventDefault();
-      start = witch.left+9;
-      intervalRight = setInterval(goRight,9);
+      rKeyDown = true;
     } else if (e.keyCode === 37){
-      e.preventDefault();
-      start = witch.left-9;
-      intervalRight = setInterval(goLeft,9);
+      lKeyDown = true;
+    }
+  }).keyup(function(e){
+    if (e.keyCode === 39){
+      rKeyDown = false;
+    } else if (e.keyCode === 37){
+      lKeyDown = false;
     }
   })
+
+  setInterval(function(){
+    if (rKeyDown) {
+      $('#witch').animate({left:'+=.5%'},10,'linear');
+    }
+    if (lKeyDown) {
+      $('#witch').animate({left:'-=.5%'},10,'linear');
+    }
+  },20);
 
   //functions to clear intervals
   function clearUp(){
@@ -53,13 +66,8 @@ $(document).ready(function(){
       // alert('game over');
     }
   }
-  function clearSide(){
-    if (witch.left===start){
-      clearInterval(intervalRight);
-    }
-  }
 
-  //functions to move witch
+  //functions to move witch vertically
   function goUp(){
     witch.height+=2;
     $('#witch').css('bottom',witch.height);
@@ -71,19 +79,8 @@ $(document).ready(function(){
     $('#witch').css('bottom',witch.height);
     clearDown();
   }
-  function goRight(){
-    witch.left+=1;
-    $('#witch').css('left',witch.left);
-    clearSide()
-  }
-  function goLeft(){
-    witch.left-=1;
-    $('#witch').css('left',witch.left);
-    clearSide()
-  }
 
   //function to check witch vs bat position
-  //????? why is this running on the way up too?
   function checkPos(){
     if (($('#witch').offset().left>bat1.left-60 && $('#witch').offset().left<bat1.left)
     && ($('#witch').offset().top>bat1.height-3 && $('#witch').offset().top<bat1.height+2)){
@@ -92,6 +89,9 @@ $(document).ready(function(){
   }
 
   function batBoost(){
+    currentHeight=witch.height;
+    clearInterval(intervalUp);
+    clearInterval(intervalDown);
     intervalUp = setInterval(goUp,1);
     intervalDown = setInterval(goDown,10);
   }
