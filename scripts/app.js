@@ -1,6 +1,9 @@
-//can only press space bar once at very beginning!
 //add witch house on moon
 //double check sizing of collision
+//remove background from witch image
+//add sound effects
+//add sparkles coming from witch
+//add alerts to say win or lose
 
 $(document).ready(function(){
 
@@ -11,6 +14,7 @@ $(document).ready(function(){
   var start;
   var rKeyDown;
   var lKeyDown;
+  var spaceCount = 0;
 
   //initializes witch/bat objects
   var witch = {
@@ -34,10 +38,13 @@ $(document).ready(function(){
   //initial witch jump/fall with spacebar
   $(window).keydown(function(e){
     if (e.keyCode === 32) {
-      e.preventDefault();
-      currentHeight = witch.height;
-      intervalUp = setInterval(goUp,1);
-      intervalDown = setInterval(goDown,10);
+      if (spaceCount===0){
+        e.preventDefault();
+        spaceCount ++;
+        currentHeight = witch.height;
+        intervalUp = setInterval(goUp,1);
+        intervalDown = setInterval(goDown,10);
+      }
     }
   })
 
@@ -58,16 +65,17 @@ $(document).ready(function(){
 
   setInterval(function(){
     if (rKeyDown) {
-      $('#witch').animate({left:'+=.5%'},10,'linear');
+      $('#witch').animate({left:'+=.2%'},10,'linear');
     }
     if (lKeyDown) {
-      $('#witch').animate({left:'-=.5%'},10,'linear');
+      $('#witch').animate({left:'-=.2%'},10,'linear');
     }
   },20);
 
   //functions to clear intervals
   function clearUp(){
-    if (witch.height>=currentHeight+350){
+    if (witch.height>=currentHeight+350 ||
+    $('#witch').offset().top<2){
       clearInterval(intervalUp);
       currentHeight+=350;
       return currentHeight;
