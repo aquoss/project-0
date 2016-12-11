@@ -28,12 +28,38 @@ $(document).ready(function(){
   }
 
   var bats = [1,2,3,4,5,6];
+  var horizontal = [];
+  var vertical = [];
+
   bats[1] = new Bat(1);
   bats[2] = new Bat(2);
   bats[3] = new Bat(3);
   bats[4] = new Bat(4);
   bats[5] = new Bat(5);
   bats[6] = new Bat(6);
+
+// var item = items[Math.floor(Math.random()*items.length)];
+
+  for (var i=bats.length; i>0; i--){
+    horizontal.push(Math.floor(Math.random()*bats.length));
+  }
+  for (var i=bats.length; i>0; i--){
+    vertical.push(Math.floor(Math.random()*bats.length));
+  }
+
+  horizontal.forEach(function(num){
+    setInterval(function(){
+      $('#bat'+num).animate({left:'+=5%'},1000,'linear');
+      $('#bat'+num).animate({left:'-=5%'},1000,'linear');
+    },10);
+  })
+
+  vertical.forEach(function(num){
+    setInterval(function(){
+      $('#bat'+num).animate({top:'+=5%'},1000,'linear');
+      $('#bat'+num).animate({top:'-=5%'},1000,'linear');
+    },10);
+  })
 
   //initial witch jump/fall with spacebar
   $(window).keydown(function(e){
@@ -50,10 +76,12 @@ $(document).ready(function(){
 
   //horizontal movement
   $(window).keydown(function(e){
-    if (e.keyCode === 39){
-      rKeyDown = true;
-    } else if (e.keyCode === 37){
-      lKeyDown = true;
+    if (spaceCount>0){
+      if (e.keyCode === 39){
+        rKeyDown = true;
+      } else if (e.keyCode === 37){
+        lKeyDown = true;
+      }
     }
   }).keyup(function(e){
     if (e.keyCode === 39){
