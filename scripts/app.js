@@ -1,3 +1,7 @@
+//can only press space bar once at very beginning!
+//add witch house on moon
+//double check sizing of collision
+
 $(document).ready(function(){
 
   var intervalUp;
@@ -13,10 +17,19 @@ $(document).ready(function(){
     height: 0,
     left: $('#witch').offset().left
   };
-  var bat1 = {
-    height: $('#bat1').offset().top,
-    left: $('#bat1').offset().left
+
+  function Bat(number){
+    this.height = $('#bat'+number).offset().top,
+    this.left = $('#bat'+number).offset().left
   }
+
+  var bats = [1,2,3,4,5,6];
+  bats[1] = new Bat(1);
+  bats[2] = new Bat(2);
+  bats[3] = new Bat(3);
+  bats[4] = new Bat(4);
+  bats[5] = new Bat(5);
+  bats[6] = new Bat(6);
 
   //initial witch jump/fall with spacebar
   $(window).keydown(function(e){
@@ -82,10 +95,12 @@ $(document).ready(function(){
 
   //function to check witch vs bat position
   function checkPos(){
-    if (($('#witch').offset().left>bat1.left-60 && $('#witch').offset().left<bat1.left)
-    && ($('#witch').offset().top>bat1.height-3 && $('#witch').offset().top<bat1.height+2)){
-      batBoost();
-    }
+    bats.forEach(function(bat){
+      if (($('#witch').offset().left>bat.left-60 && $('#witch').offset().left<bat.left)
+      && ($('#witch').offset().top>bat.height-3 && $('#witch').offset().top<bat.height+2)){
+        batBoost();
+      }
+    })
   }
 
   function batBoost(){
