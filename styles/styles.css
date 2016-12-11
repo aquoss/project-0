@@ -1,15 +1,43 @@
 #witch {
-  height: 110px;
+  height: 80px;
   width: auto;
   position: absolute;
   bottom: 0px;
-  right: 50%
+  right: 50%;
 }
 
 #bat1 {
-  height: 50px;
+  bottom: 40%;
+  right: 65%;
+}
+
+#bat2 {
+  bottom: 70%;
+  right: 70%;
+}
+
+#bat3 {
+  bottom: 55%;
+  right: 40%;
+}
+
+#bat4 {
+  bottom: 40%;
+  right: 30%;
+}
+
+#bat5 {
+  bottom: 20%;
+  right: 80%;
+}
+
+#bat6 {
+  bottom: 80%;
+  right: 20%;
+}
+
+.bat {
+  height: 30px;
   width: auto;
   position: absolute;
-  bottom: 200px;
-  right: 50%;
 }
