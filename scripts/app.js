@@ -1,16 +1,23 @@
-//double check sizing of collision
-//add sound effects
-//add sparkles coming from witch
-//add alerts to say win or lose (make gifs pop up) and win if collide with house!
-//keep score
-//add reset button
-
 $(document).ready(function(){
 
-  $(document).on('click','.btn',function(){
+  //hide end of game modals
+  $('#lose').hide();
+  $('#win').hide();
+
+  //event listeners for modals
+  $('.instructions').on('click',function(){
     $('.instructions').hide();
   })
+  $('#lose').on('click',function(){
+    $('#lose').hide();
+    location.reload();
+  })
+  $('#win').on('click',function(){
+    $('#win').hide();
+    location.reload();
+  })
 
+  //declare all global vars
   var intervalUp;
   var intervalDown;
   var intervalRight;
@@ -19,22 +26,24 @@ $(document).ready(function(){
   var rKeyDown;
   var lKeyDown;
   var spaceCount = 0;
-
-  //initializes witch/bat objects
+  var horizontal = [];
+  var vertical = [];
+  var squeak = new Audio('sounds/squeak.wav');
+  var fall = new Audio('sounds/fall.wav');
+  var laugh = new Audio('sounds/laugh.wav');
   var witch = {
     height: 0,
     left: $('#witch').offset().left
   };
 
+  //bat constructor
   function Bat(number){
     this.height = $('#bat'+number).offset().top,
     this.left = $('#bat'+number).offset().left
   }
 
+  //create bat instances
   var bats = [1,2,3,4,5,6];
-  var horizontal = [];
-  var vertical = [];
-
   bats[1] = new Bat(1);
   bats[2] = new Bat(2);
   bats[3] = new Bat(3);
@@ -42,8 +51,7 @@ $(document).ready(function(){
   bats[5] = new Bat(5);
   bats[6] = new Bat(6);
 
-// var item = items[Math.floor(Math.random()*items.length)];
-
+  //random assignment of horizontal/vertical movement
   for (var i=bats.length; i>0; i--){
     horizontal.push(Math.floor(Math.random()*bats.length));
   }
@@ -78,7 +86,7 @@ $(document).ready(function(){
     }
   })
 
-  //horizontal movement
+  //event listeners for horizontal movement
   $(window).keydown(function(e){
     if (spaceCount>0){
       if (e.keyCode === 39){
@@ -95,6 +103,7 @@ $(document).ready(function(){
     }
   })
 
+  //animation of horizontal movement
   setInterval(function(){
     if (rKeyDown) {
       $('#witch').animate({left:'+=.2%'},10,'linear');
@@ -116,7 +125,8 @@ $(document).ready(function(){
   function clearDown(){
     if (witch.height<=0){
       clearInterval(intervalDown);
-      // alert('game over');
+      $('#lose').show();
+      fall.play();
     }
   }
 
@@ -133,24 +143,26 @@ $(document).ready(function(){
     clearDown();
   }
 
-  //function to check witch vs bat position
+  //function to check for collision
   function checkPos(){
     bats.forEach(function(bat){
-      if (($('#witch').offset().left>bat.left-60 && $('#witch').offset().left<bat.left+5)
-      && ($('#witch').offset().top>bat.height-3 && $('#witch').offset().top<bat.height+2)){
+      if (($('#witch').offset().left>bat.left-50 && $('#witch').offset().left<bat.left+20)
+      && ($('#witch').offset().top>bat.height-3 && $('#witch').offset().top<bat.height+10)){
         batBoost();
       }
     })
     if (($('#witch').offset().left>$('#house').offset().left-90 && $('#witch').offset().left<$('#house').offset().left)
-    && ($('#witch').offset().top>$('#house').offset().top-3 && $('#witch').offset().top<$('#house').offset().top+2)){
+    && ($('#witch').offset().top>$('#house').offset().top-3 && $('#witch').offset().top<$('#house').offset().top+30)){
       clearInterval(intervalUp);
       clearInterval(intervalDown);
-      
-      alert('You won!');
+      $('#win').show();
+      laugh.play();
     }
   }
 
+  //function to boost witch when collision occurs
   function batBoost(){
+    squeak.play();
     currentHeight=witch.height;
     clearInterval(intervalUp);
     clearInterval(intervalDown);
