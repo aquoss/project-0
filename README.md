@@ -1,6 +1,4 @@
-# Black Magic - [Link to Deployed version of the project](https://github.com/sf-wdi-labs/readme-example)
-
-<img src="https://cloud.githubusercontent.com/assets/7833470/10423298/ea833a68-7079-11e5-84f8-0a925ab96893.png" width="100">
+# Black Magic - [Link to game](http://black-magic.bitballon.com)
 
 ## Project 0 - Black Magic
 
@@ -8,7 +6,7 @@
 
 In this game, you play the character of a witch. She is low on magic from casting too many spells, and needs your guidance to get back to her home on the moon. She only has enough power for one last take off, so you must help her land on bats to get an extra upward boost. Don't let her hit the ground though, or she'll be stuck on mortal land!
 
-See the published project at [github.com/sf-wdi-labs/readme-example](https://github.com/sf-wdi-labs/readme-example)!
+See the published project at [github.com/sf-wdi-labs/readme-example](http://black-magic.bitballoon.com)!
 
 ## Technologies Used
 
@@ -19,7 +17,7 @@ See the published project at [github.com/sf-wdi-labs/readme-example](https://git
 ## Code I'm Proud Of
 
 ```javascript
-	//function to clear intervals
+	//function to clear movement intervals
   	function clearUp(){
 	    if (witch.height>=currentHeight+350 ||
 	    $('#witch').offset().top<2){
@@ -48,4 +46,4 @@ See the published project at [github.com/sf-wdi-labs/readme-example](https://git
 ```
 
 ### Screen Shots
-Screen Shot 2016-12-11 at 10.20.31 PM
+![Alt text](/images/screenshot.png?raw=true "Game Preview")
