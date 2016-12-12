@@ -1,11 +1,15 @@
-//add witch house on moon
 //double check sizing of collision
-//remove background from witch image
 //add sound effects
 //add sparkles coming from witch
-//add alerts to say win or lose
+//add alerts to say win or lose (make gifs pop up) and win if collide with house!
+//keep score
+//add reset button
 
 $(document).ready(function(){
+
+  $(document).on('click','.btn',function(){
+    $('.instructions').hide();
+  })
 
   var intervalUp;
   var intervalDown;
@@ -132,11 +136,18 @@ $(document).ready(function(){
   //function to check witch vs bat position
   function checkPos(){
     bats.forEach(function(bat){
-      if (($('#witch').offset().left>bat.left-60 && $('#witch').offset().left<bat.left)
+      if (($('#witch').offset().left>bat.left-60 && $('#witch').offset().left<bat.left+5)
       && ($('#witch').offset().top>bat.height-3 && $('#witch').offset().top<bat.height+2)){
         batBoost();
       }
     })
+    if (($('#witch').offset().left>$('#house').offset().left-90 && $('#witch').offset().left<$('#house').offset().left)
+    && ($('#witch').offset().top>$('#house').offset().top-3 && $('#witch').offset().top<$('#house').offset().top+2)){
+      clearInterval(intervalUp);
+      clearInterval(intervalDown);
+      
+      alert('You won!');
+    }
   }
 
   function batBoost(){
