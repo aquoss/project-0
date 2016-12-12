@@ -28,6 +28,7 @@ $(document).ready(function(){
   var spaceCount = 0;
   var horizontal = [];
   var vertical = [];
+  var music = new Audio('sounds/music.mp3');
   var squeak = new Audio('sounds/squeak.wav');
   var fall = new Audio('sounds/fall.wav');
   var laugh = new Audio('sounds/laugh.wav');
@@ -35,6 +36,8 @@ $(document).ready(function(){
     height: 0,
     left: $('#witch').offset().left
   };
+
+  setInterval(function(){music.play()},50);
 
   //bat constructor
   function Bat(number){
