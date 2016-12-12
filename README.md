@@ -1,12 +1,12 @@
-# Black Magic - [Link to game](http://black-magic.bitballon.com)
+# Black Magic - [Let's play!](http://black-magic.bitballon.com)
 
-## Project 0 - Black Magic
+## Project 0
 
 <i> This is a repo for a one player game I created. </i>
 
 In this game, you play the character of a witch. She is low on magic from casting too many spells, and needs your guidance to get back to her home on the moon. She only has enough power for one last take off, so you must help her land on bats to get an extra upward boost. Don't let her hit the ground though, or she'll be stuck on mortal land!
 
-See the published project at [github.com/sf-wdi-labs/readme-example](http://black-magic.bitballoon.com)!
+See the published project [here](http://black-magic.bitballoon.com)!
 
 ## Technologies Used
 
